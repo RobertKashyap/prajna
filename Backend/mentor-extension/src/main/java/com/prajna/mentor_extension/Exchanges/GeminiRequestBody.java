@@ -46,36 +46,6 @@ public class GeminiRequestBody {
         private double topP;
         private int topK;
         private String responseMimeType;
-        private ResponseSchema responseSchema;
-
-        @Data
-        @NoArgsConstructor
-        @AllArgsConstructor
-        public static class ResponseSchema {
-            private String type;
-            private Item items;
-
-            @Data
-            @NoArgsConstructor
-            @AllArgsConstructor
-            public static class Item {
-                private String type;
-                private Properties properties;
-
-                @Data
-                @NoArgsConstructor
-                @AllArgsConstructor
-                public static class Properties {
-                    private RecipeName recipe_name;
-
-                    @Data
-                    @NoArgsConstructor
-                    @AllArgsConstructor
-                    public static class RecipeName {
-                        private String type;
-                    }
-                }
-            }
-        }
+        private String responseSchema;
     }
 }
