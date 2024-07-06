@@ -49,6 +49,7 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.OK).body(UsersService.getAllUserss());
     }
 
+    @SuppressWarnings("rawtypes")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserDTO user) {
         try {
@@ -59,11 +60,6 @@ public class UsersController {
 
             if (authentication.isAuthenticated()) {
                 Object authenticatedUser =  authentication.getPrincipal();
-                // Map<String, Object> responseBody = new HashMap<>();
-                // responseBody.put("message", "Login successful");
-                // return ResponseEntity.ok(responseBody);
-               // return authenticatedUser;
-
                return ResponseEntity.status(HttpStatus.CREATED).body(authenticatedUser);
             }
 

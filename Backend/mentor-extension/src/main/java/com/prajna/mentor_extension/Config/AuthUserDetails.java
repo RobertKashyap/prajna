@@ -3,16 +3,12 @@ package com.prajna.mentor_extension.Config;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.prajna.mentor_extension.DTO.UserDTO;
 import com.prajna.mentor_extension.Entity.Users;
 import com.prajna.mentor_extension.Service.UserService;
 
