@@ -23,14 +23,12 @@ public class GeminiService {
     private static Integer TOP_K = 2;
     private static Integer MAX_OUTPUT_TOKENS = 10;
 
-    // @Value("${geminiapikey}")
-    private String geminiKey="APIKEY";
     private RestTemplate restTemplate = new RestTemplate();
     private String URL_TEMPLATE = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=%s";
 
-    public ResponseEntity<String> callGemini(String input) throws JsonProcessingException {
+    public ResponseEntity<String> callGemini(String input,String geminiApiKey) throws JsonProcessingException {
 
-        String url = String.format(URL_TEMPLATE, geminiKey);
+        String url = String.format(URL_TEMPLATE, geminiApiKey);
         String prompt = PRE_FORMAT_PROMPT + "\n\n" + input;
 
         HttpHeaders headers = new HttpHeaders();
@@ -61,7 +59,7 @@ public class GeminiService {
         return response;
     }
 
-    // /*
+    /*
     public static void main(String[] args) throws JsonProcessingException {
 
         GeminiService obj = new GeminiService();
