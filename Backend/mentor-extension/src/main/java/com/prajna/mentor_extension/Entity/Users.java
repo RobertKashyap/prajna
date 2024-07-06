@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.prajna.mentor_extension.Exchanges.Dashboard;
 
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Document(collection = "users")
 public class Users {
+  
     @Id
-    @NonNull
     String id;
     @NonNull
     String name;
@@ -26,8 +27,9 @@ public class Users {
     String password;
 
     private Boolean active;
-
+    @JsonIgnore
     Dashboard dashboard;
+    @JsonIgnore
     String presentQueryHash;
 }
 

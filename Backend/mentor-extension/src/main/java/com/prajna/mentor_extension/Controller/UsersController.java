@@ -2,12 +2,11 @@ package com.prajna.mentor_extension.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.prajna.mentor_extension.Config.AuthUserDetails;
 import com.prajna.mentor_extension.DTO.UserDTO;
 import com.prajna.mentor_extension.Entity.Users;
 import com.prajna.mentor_extension.Service.UserService;
 import java.util.*;
-import java.security.Principal;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class UsersController {
@@ -28,6 +25,9 @@ public class UsersController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AuthUserDetails authUserDetails;
 
     @SuppressWarnings("rawtypes")
     @PostMapping("register")
@@ -73,15 +73,11 @@ public class UsersController {
         return null;
     }
 
-    // @RequestMapping("/authuser")
-	// public Users getUserDetailsAfterLogin(Principal user) {
-	// 	List<Users> customers = UserService.findUsersByEmail(user.getName());
-	// 	if (customers.size() > 0) {
-	// 		return customers.get(0);
-	// 	}else {
-	// 		return null;
-	// 	}
+    @GetMapping("/authuser")
+	public ResponseEntity<Users> getUserDetailsAfterLogin() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(authUserDetails.getCurrentUser());
 		
-	// }
+	}
 
 }

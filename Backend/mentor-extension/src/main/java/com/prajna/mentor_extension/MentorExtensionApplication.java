@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-@OpenAPIDefinition(info = @Info(title = "Online wallet Application", version = "1.1"),
+@OpenAPIDefinition(info = @Info(title = "Mentor Extension API", version = "1.1"),
         security = { @SecurityRequirement(name = "basicAuth"),
                 @SecurityRequirement(name = "bearerToken") },
         servers = { @Server(url = "/", description = "Default Server URL") }
