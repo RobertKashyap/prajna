@@ -18,28 +18,28 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.prajna.mentor_extension.DTO.UserDTO;
 import com.prajna.mentor_extension.Entity.Users;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-     @Bean
+    @Bean
     public SecurityFilterChain mySecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
+        return httpSecurity
 
-       return httpSecurity
-
-                 .csrf(csrf -> csrf.disable())
-                 .authorizeHttpRequests(auth -> auth
-                 .requestMatchers("/swagger-ui*/**", "/v3/api-docs/**").permitAll()
-                 .requestMatchers("/register","/login","error","/authuser").permitAll()
-                 .anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/swagger-ui*/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/register", "/login", "error", "/authuser", "/fetchDashboard").permitAll()
+                        .anyRequest().authenticated())
                 // .formLogin(Customizer.withDefaults())
-                 .httpBasic(Customizer.withDefaults()).build();
+                .httpBasic(Customizer.withDefaults()).build();
 
+    }
 
-}
-
- @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -48,5 +48,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    
 }
