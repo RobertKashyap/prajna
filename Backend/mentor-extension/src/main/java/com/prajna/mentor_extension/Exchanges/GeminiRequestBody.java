@@ -5,47 +5,75 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class GeminiRequestBody {
-    private List<Content> contents;
-    private List<SafetySetting> safetySettings;
-    private GenerationConfig generationConfig;
+    public SystemInstruction system_instruction;
+    public List<Content> contents;
+    public List<SafetySetting> safetySettings;
+    public GenerationConfig generationConfig;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Part {
+        public String text;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SystemInstruction {
+        public Part parts;
+    }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Content {
-        private List<Part> parts;
+        public List<Part> parts;
 
-        @Data
-        @NoArgsConstructor
-        @AllArgsConstructor
-        public static class Part {
-            private String text;
-        }
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class SafetySetting {
-        private String category;
-        private String threshold;
+        public String category;
+        public String threshold;
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class GenerationConfig {
-        private List<String> stopSequences;
-        private double temperature;
-        private int maxOutputTokens;
-        private double topP;
-        private int topK;
-        private String responseMimeType;
-        private String responseSchema;
+        public List<String> stopSequences;
+        public double temperature;
+        public int maxOutputTokens;
+        public int topK;
+        public String responseMimeType;
+        public Object responseSchema;
     }
+
+
+    // Custom constructor to instantiate all objects recursively
+    public GeminiRequestBody() {
+        this.system_instruction = new SystemInstruction(new Part(""));
+
+        this.contents = new ArrayList<>();
+        this.contents.add(new Content(new ArrayList<>()));
+        this.contents.get(0).parts = new ArrayList<>();
+        this.contents.get(0).parts.add(new Part(""));
+
+        this.safetySettings = new ArrayList<>();
+        this.safetySettings.add(new SafetySetting());
+        this.safetySettings.get(0).category = "";
+        this.safetySettings.get(0).threshold = "";
+
+        this.generationConfig = new GenerationConfig(new ArrayList<>(), 0.0, 0, 0, "",null);
+
+
+    }
+
 }
