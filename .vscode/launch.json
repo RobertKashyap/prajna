@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "MentorExtensionApplication",
+      "request": "launch",
+      "mainClass": "com.prajna.mentor_extension.MentorExtensionApplication",
+      "projectName": ""
+    },
+    {
+      "type": "java",
       "name": "Spring Boot-MentorExtensionApplication<mentor-extension>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
