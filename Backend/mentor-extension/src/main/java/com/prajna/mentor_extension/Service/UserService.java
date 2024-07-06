@@ -4,58 +4,69 @@ import java.util.Optional;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.prajna.mentor_extension.Entity.User;
-import com.prajna.mentor_extension.Repository.UserRepository;
+import com.prajna.mentor_extension.Entity.Users;
+import com.prajna.mentor_extension.Repository.UsersRepository;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-
+    private final UsersRepository UsersRepository;
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private PasswordEncoder passwordEncoder;
+
+    public UserService(UsersRepository UsersRepository) {
+        this.UsersRepository = UsersRepository;
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public Users createUsers(Users users) {
+
+       
+            if(UsersRepository.findByEmail(users.getEmail()).isPresent()) return null;
+            users.setPassword(passwordEncoder.encode(users.getPassword()));
+            users.setActive(true);
+            Users authUsers = UsersRepository.save(users);
+            return authUsers;
+           
+       
+      //  return UsersRepository.save(Users);
     }
 
-    public User getUserById(String id) {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isEmpty()||!user.isPresent())
+    public Users getUsersById(String id) {
+        Optional<Users> Users = UsersRepository.findById(id);
+        if(Users.isEmpty()||!Users.isPresent())
             return null;
         else 
-            return user.get();
+            return Users.get();
     }
 
-    public User getUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()||!user.isPresent())
+    public Users getUsersByEmail(String email) {
+        Optional<Users> Users = UsersRepository.findByEmail(email);
+        if(Users.isEmpty()||!Users.isPresent())
             return null;
         else 
-            return user.get();
+            return Users.get();
     }
 
-    public User getUserByName(String name) {
-        Optional<User> user = userRepository.findByName(name);
-        if(user.isEmpty()||!user.isPresent())
+    public Users getUsersByName(String name) {
+        Optional<Users> Users = UsersRepository.findByName(name);
+        if(Users.isEmpty()||!Users.isPresent())
             return null;
         else 
-            return user.get();
+            return Users.get();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<Users> getAllUserss() {
+        return UsersRepository.findAll();
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public Users updateUsers(Users Users) {
+        return UsersRepository.save(Users);
     }
 
-    public void deleteUser(String id) {
-        userRepository.deleteById(id);
+    public void deleteUsers(String id) {
+        UsersRepository.deleteById(id);
     }
 }

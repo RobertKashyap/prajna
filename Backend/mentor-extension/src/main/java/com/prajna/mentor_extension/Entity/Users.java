@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "users")
-public class User {
+public class Users {
     @Id
     @NonNull
     String id;
@@ -22,6 +22,10 @@ public class User {
     String name;
     @NonNull
     String email;
+    @NonNull
+    String password;
+
+    private Boolean active;
 
     Dashboard dashboard;
     String presentQueryHash;
