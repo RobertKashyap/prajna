@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.prajna.mentor_extension.Exchanges.Dashboard;
 
 import lombok.AllArgsConstructor;
@@ -16,13 +17,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Document(collection = "users")
 public class Users {
-  
+    @JsonIgnore
     @Id
     String id;
     @NonNull
     String name;
     @NonNull
     String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NonNull
     String password;
 

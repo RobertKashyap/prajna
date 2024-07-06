@@ -22,6 +22,10 @@ public class Dashboard {
         Integer noOfQueries;// up till now per user (in demo, only one user)
         Integer inlineCompletions;// up till now counter for all requests in User entity
         Integer overallQuality;// inPercentage
+        public Integer getOverAllQuality() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getOverAllQuality'");
+        }
     }
 
     @Data

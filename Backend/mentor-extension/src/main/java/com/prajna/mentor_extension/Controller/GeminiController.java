@@ -1,5 +1,6 @@
 package com.prajna.mentor_extension.Controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prajna.mentor_extension.Config.AuthUserDetails;
 import com.prajna.mentor_extension.DTO.FileFormat;
@@ -38,7 +39,7 @@ public class GeminiController {
 
     @PostMapping("/fetchDashboard")
     public ResponseEntity<Dashboard> setText(@RequestBody FileFormat fileFormat, @RequestParam String API_KEY)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException, JsonProcessingException {
+            throws NoSuchAlgorithmException, IOException {
 
         Users presentUser = authUserDetails.getCurrentUser();
 
@@ -49,7 +50,7 @@ public class GeminiController {
             // ResponseEntity<String> serviceResponse =
             // geminiService.callGemini(fileFormat.getContent(), API_KEY);
             ResponseEntity<Dashboard> serviceResponse = geminiService.getDashboard(fileFormat, API_KEY);
-            if (serviceResponse.getStatusCode().is2xxSuccessful()) {
+            if (serviceResponse.getStatusCode().is2xxSuccessful() && serviceResponse.getBody() != null) {
 
                 var oldNumberofQueries = presentUser.getDashboard().getStatus().getNoOfQueries();
                 var oldInlineCompletions = presentUser.getDashboard().getStatus().getInlineCompletions();
