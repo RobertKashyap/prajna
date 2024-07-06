@@ -1,74 +1,91 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "properties": {
-      "status": {
-        "type": "object",
-        "properties": {
-          "noOfQueries": {
-            "type": "integer"
-          },
-          "inlineCompletions": {
-            "type": "integer"
-          },
-          "overallQuality": {
-            "type": "integer"
-          },
-          "required": ["noOfQueries", "inlineCompletions", "overallQuality"]
-        }
-      },
-      "inlineSuggestion": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "lineNumber": {
-              "type": "integer"
-            },
-            "text": {
-              "type": "string"
-            }
-          },
-          "required": ["lineNumber", "text"]
-        }
-      },
-      "checkStyle": {
-        "type": "object",
-        "properties": {
-          "checkboxes": {
-            "type": "array",
-            "items": {
-              "type": "boolean"
-            }
-          },
-          "occuranceLineNumbers": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "integer"
-              }
-            }
-          },
-          "Score": {
-            "type": "integer"
-          }
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "object",
+      "properties": {
+        "noOfQueries": {
+          "type": "integer"
         },
-        "required": ["checkboxes", "occuranceLineNumbers", "Score"]
+        "inlineCompletions": {
+          "type": "integer"
+        },
+        "overallQuality": {
+          "type": "integer"
+        }
       },
-      "summary": {
+      "required": [
+        "noOfQueries",
+        "inlineCompletions",
+        "overallQuality"
+      ]
+    },
+    "inlineSuggestion": {
+      "type": "array",
+      "items": {
         "type": "object",
         "properties": {
-          "strength": {
-            "type": "string"
+          "lineNumber": {
+            "type": "integer"
           },
-          "scopeForImprovement": {
+          "text": {
             "type": "string"
           }
         },
-        "required": ["strength", "scopeForImprovement"]
+        "required": [
+          "lineNumber",
+          "text"
+        ]
       }
     },
-    "required": ["status", "inlineSuggestion", "checkStyle", "summary"]
-  }
-  
+    "checkStyle": {
+      "type": "object",
+      "properties": {
+        "checkboxes": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          }
+        },
+        "occuranceLineNumbers": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "score": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "checkboxes",
+        "occuranceLineNumbers",
+        "score"
+      ]
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "strength": {
+          "type": "string"
+        },
+        "scopeForImprovement": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "strength",
+        "scopeForImprovement"
+      ]
+    }
+  },
+  "required": [
+    "status",
+    "inlineSuggestion",
+    "checkStyle",
+    "summary"
+  ]
+}
