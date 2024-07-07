@@ -45,13 +45,14 @@ public class GeminiController {
 
         if (getSHA256Hash(fileFormat.getContent()) != presentUser.getPresentQueryHash()) {
             presentUser.setPresentQueryHash(getSHA256Hash(fileFormat.getContent()));
+            presentUser.setDashboard(new Dashboard());
             usersRepository.save(presentUser);
-
+            
             // ResponseEntity<String> serviceResponse =
             // geminiService.callGemini(fileFormat.getContent(), API_KEY);
             ResponseEntity<Dashboard> serviceResponse = geminiService.getDashboard(fileFormat, API_KEY);
             if (serviceResponse.getStatusCode().is2xxSuccessful() && serviceResponse.getBody() != null) {
-
+               
                 var oldNumberofQueries = presentUser.getDashboard().getStatus().getNoOfQueries();
                 var oldInlineCompletions = presentUser.getDashboard().getStatus().getInlineCompletions();
 
