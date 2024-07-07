@@ -1,5 +1,6 @@
 package com.prajna.mentor_extension.Exchanges;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,15 +10,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Dashboard {
     Status status;
     List<InlineSuggestion> inlineSuggestion;
     CheckStyle checkStyle;
     Summary summary;
+     public Dashboard() {
+        this.status = new Status(0, 0, 0);
+        
+        this.inlineSuggestion = new ArrayList<>();
+        this.inlineSuggestion.add(new InlineSuggestion(0, ""));
 
+        this.checkStyle = new CheckStyle(new ArrayList<>(), new ArrayList<>(), 0);
+
+        this.summary = new Summary("", "");
+    }
     /*
      * ordered list:
      * 1.Code Reusability(avoiding repeatation)

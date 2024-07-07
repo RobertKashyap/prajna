@@ -42,40 +42,43 @@ public class GeminiController {
             throws NoSuchAlgorithmException, IOException {
 
         Users presentUser = authUserDetails.getCurrentUser();
-
-        if (getSHA256Hash(fileFormat.getContent()) != presentUser.getPresentQueryHash()) {
-            presentUser.setPresentQueryHash(getSHA256Hash(fileFormat.getContent()));
-            presentUser.setDashboard(new Dashboard());
-            usersRepository.save(presentUser);
+        ResponseEntity<Dashboard> serviceResponse= geminiService.getDashboard(fileFormat, API_KEY);;
+        // if (getSHA256Hash(fileFormat.getContent()) != presentUser.getPresentQueryHash()) {
+            // presentUser.setPresentQueryHash(getSHA256Hash(fileFormat.getContent()));
+            // presentUser.setDashboard(new Dashboard());
+            // usersRepository.save(presentUser);
             
             // ResponseEntity<String> serviceResponse =
             // geminiService.callGemini(fileFormat.getContent(), API_KEY);
-            ResponseEntity<Dashboard> serviceResponse = geminiService.getDashboard(fileFormat, API_KEY);
-            if (serviceResponse.getStatusCode().is2xxSuccessful() && serviceResponse.getBody() != null) {
+        //   serviceResponse  = geminiService.getDashboard(fileFormat, API_KEY);
+        //     if (serviceResponse.getStatusCode().is2xxSuccessful() && serviceResponse.getBody() != null) {
                
-                var oldNumberofQueries = presentUser.getDashboard().getStatus().getNoOfQueries();
-                var oldInlineCompletions = presentUser.getDashboard().getStatus().getInlineCompletions();
+        //         var oldNumberofQueries = presentUser.getDashboard().getStatus().getNoOfQueries();
+        //         var oldInlineCompletions = presentUser.getDashboard().getStatus().getInlineCompletions();
 
-                presentUser.getDashboard().getStatus().setNoOfQueries(oldNumberofQueries + 1);
+        //         presentUser.getDashboard().getStatus().setNoOfQueries(oldNumberofQueries + 1);
 
-                presentUser.getDashboard().getStatus().setInlineCompletions(
-                        oldInlineCompletions + serviceResponse.getBody().getInlineSuggestion().size());
+        //         presentUser.getDashboard().getStatus().setInlineCompletions(
+        //                 oldInlineCompletions + serviceResponse.getBody().getInlineSuggestion().size());
 
-                presentUser.getDashboard().getStatus()
-                        .setOverallQuality(serviceResponse.getBody().getStatus().getOverAllQuality());
+        //         presentUser.getDashboard().getStatus()
+        //                 .setOverallQuality(serviceResponse.getBody().getStatus().getOverAllQuality());
 
-                presentUser.getDashboard().setInlineSuggestion(serviceResponse.getBody().getInlineSuggestion());
-                presentUser.getDashboard().setCheckStyle(serviceResponse.getBody().getCheckStyle());
-                presentUser.getDashboard().setSummary(serviceResponse.getBody().getSummary());
-                usersRepository.save(presentUser);
+        //         presentUser.getDashboard().setInlineSuggestion(serviceResponse.getBody().getInlineSuggestion());
+        //         presentUser.getDashboard().setCheckStyle(serviceResponse.getBody().getCheckStyle());
+        //         presentUser.getDashboard().setSummary(serviceResponse.getBody().getSummary());
+        //         usersRepository.save(presentUser);
 
-                return serviceResponse;
-            } else {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            return new ResponseEntity<>(presentUser.getDashboard(), HttpStatus.OK);
-        }
+        //         return serviceResponse;
+        //     } else {
+        //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        //     }
+        // } else {
+        //     return new ResponseEntity<>(presentUser.getDashboard(), HttpStatus.OK);
+        // }
+        
+        // } 
+        return serviceResponse;
     }
 
     private String getSHA256Hash(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
